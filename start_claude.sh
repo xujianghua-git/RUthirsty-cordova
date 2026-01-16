@@ -2,9 +2,12 @@
 set -e
 #!/bin/bash
 
-# 设置环境变量（需手动填写）
-export ANTHROPIC_AUTH_TOKEN=sk-BnACKGNS5fruSd9Mmm2cH4MuLXGR27sB0md9KsYN6fvR4CYi
-export ANTHROPIC_BASE_URL=https://xinghuapi.com
+# 设置环境变量
+export ANTHROPIC_AUTH_TOKEN=sk-zNTPXWGbXhjARCdCnEkoPQLqHXVQmo7v3yEHFJEKExi3Do3m
+export ANTHROPIC_BASE_URL=https://apiHK.Ai
+# 备选API线路（去掉下面两行注释生效）
+# export ANTHROPIC_AUTH_TOKEN=sk-BnACKGNS5fruSd9Mmm2cH4MuLXGR27sB0md9KsYN6fvR4CYi
+# export ANTHROPIC_BASE_URL=https://xinghuapi.com
 
 first_run=false
 # 检查claude是否已安装
