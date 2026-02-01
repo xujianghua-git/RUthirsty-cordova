@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUthirsty - APP效果演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .demo-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            font-size: 24px;
+        }
+
+        .phone-frame {
+            width: 320px;
+            height: 640px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 15px;
+            margin: 20px auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #0a0e27 100%);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+        }
+
+        .app-title {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00f5ff, #00a8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: rgba(26, 31, 58, 0.6);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 12px;
+            padding: 10px 15px;
+            text-align: center;
+            min-width: 70px;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #a0aec0;
+            margin-bottom: 3px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #00f5ff;
+        }
+
+        .stat-unit {
+            font-size: 10px;
+            color: #a0aec0;
+        }
+
+        .water-btn {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00a8ff 0%, #00f5ff 100%);
+            border: none;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(0, 168, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(0, 168, 255, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(0, 245, 255, 0.8);
+            }
+        }
+
+        .water-btn .icon {
+            font-size: 36px;
+        }
+
+        .history-list {
+            width: 100%;
+            background: rgba(26, 31, 58, 0.6);
+            border: 1px solid rgba(0, 245, 255, 0.15);
+            border-radius: 15px;
+            padding: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background: rgba(0, 245, 255, 0.05);
+            border: 1px solid rgba(0, 245, 255, 0.15);
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .history-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .history-time {
+            color: #fff;
+        }
+
+        .history-count {
+            background: linear-gradient(135deg, #00f5ff, #00a8ff);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .demo-link {
+            color: #667eea;
+            font-size: 24px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 0;
+            padding: 15px 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .demo-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .emoji-demo {
+            font-size: 48px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .color-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .color-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 3px solid white;
+        }
+
+        .color-name {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+
+        .color-code {
+            font-size: 10px;
+            color: #999;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💧 RUthirsty 喝水打卡 APP</h1>
+        <p class="subtitle">科技感十足的深色霓虹风格应用</p>
+
+        <div class="emoji-demo">
+            ✨ 💧 📱 🎨 🚀
+        </div>
+
+        <div style="text-align: center; margin-bottom: 40px;">
+            <a href="http://localhost:8000" class="demo-link" target="_blank">
+                🚀 点击这里打开APP实时预览
+            </a>
+            <p style="color: white; margin-top: 10px; opacity: 0.9;">
+                在新标签页中打开完整应用体验
+            </p>
+        </div>
+
+        <div class="demo-grid">
+            <div class="demo-card">
+                <h3>🎨 视觉设计</h3>
+                <p>深色科技风格，霓虹灯光效果</p>
+                <div class="color-palette">
+                    <div class="color-item">
+                        <div class="color-box" style="background: #0a0e27;"></div>
+                        <span class="color-name">深蓝黑</span>
+                        <span class="color-code">#0a0e27</span>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-box" style="background: #00f5ff;"></div>
+                        <span class="color-name">青色霓虹</span>
+                        <span class="color-code">#00f5ff</span>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-box" style="background: #00a8ff;"></div>
+                        <span class="color-name">科技蓝</span>
+                        <span class="color-code">#00a8ff</span>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-box" style="background: #9b59b6;"></div>
+                        <span class="color-name">紫色</span>
+                        <span class="color-code">#9b59b6</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h3>⚡ 核心功能</h3>
+                <ul class="feature-list">
+                    <li><span class="feature-icon">💧</span> 一键打卡记录喝水</li>
+                    <li><span class="feature-icon">📊</span> 今日杯数实时统计</li>
+                    <li><span class="feature-icon">📅</span> 累计打卡天数</li>
+                    <li><span class="feature-icon">📝</span> 完整历史记录</li>
+                    <li><span class="feature-icon">💾</span> 本地数据存储</li>
+                    <li><span class="feature-icon">📳</span> 震动触觉反馈</li>
+                </ul>
+            </div>
+
+            <div class="demo-card">
+                <h3>✨ 动画效果</h3>
+                <ul class="feature-list">
+                    <li><span class="feature-icon">🌊</span> 三层水波纹扩散</li>
+                    <li><span class="feature-icon">✨</span> 按钮流光扫过</li>
+                    <li><span class="feature-icon">💫</span> 打卡成功脉冲</li>
+                    <li><span class="feature-icon">📥</span> 记录滑入动画</li>
+                    <li><span class="feature-icon">🔔</span> Toast消息提示</li>
+                    <li><span class="feature-icon">🎭</span> 流畅过渡效果</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-card">
+            <h3>📱 APP 界面预览</h3>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="app-title">💧 RUthirsty</div>
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-label">今日已喝</div>
+                            <div class="stat-value">3</div>
+                            <div class="stat-unit">杯</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">累计天数</div>
+                            <div class="stat-value">5</div>
+                            <div class="stat-unit">天</div>
+                        </div>
+                    </div>
+                    <button class="water-btn">
+                        <span class="icon">💧</span>
+                        <span>打卡喝水</span>
+                    </button>
+                    <div class="history-list">
+                        <div class="history-item">
+                            <span class="history-time">14:32:15</span>
+                            <span class="history-count">#3</span>
+                        </div>
+                        <div class="history-item">
+                            <span class="history-time">10:15:30</span>
+                            <span class="history-count">#2</span>
+                        </div>
+                        <div class="history-item">
+                            <span class="history-time">08:20:45</span>
+                            <span class="history-count">#1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px; color: #666;">
+                ↑ 界面预览（实际效果更精美）
+            </p>
+        </div>
+
+        <div class="cta-section">
+            <h2>🎯 立即体验完整功能</h2>
+            <p style="margin-top: 15px; color: #666; font-size: 16px;">
+                点击下方按钮，在浏览器中打开完整的喝水打卡应用
+            </p>
+            <a href="http://localhost:8000" class="cta-btn" target="_blank">
+                🚀 打开 APP
+            </a>
+            <p style="margin-top: 20px; color: #999; font-size: 14px;">
+                💡 提示：点击"打卡喝水"按钮体验交互效果
+            </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; color: white; opacity: 0.8;">
+            <p>📱 Cordova 跨平台应用 | 支持 Android & iOS</p>
+            <p style="margin-top: 10px;">Made with 💙 for RUthirsty</p>
+        </div>
+    </div>
+</body>
+</html>
